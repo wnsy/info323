@@ -27,6 +27,11 @@ public class ChatServerImpl extends UnicastRemoteObject
 			  throws RemoteException {
 		System.out.println("test1" + sender + message);
 		
+		String concat = sender.getName() + ": " + message;
+		
+		for (IClientCallback cb : registerList) {
+			cb.displayMessage(concat);
+		}
 	}
 	
 }
