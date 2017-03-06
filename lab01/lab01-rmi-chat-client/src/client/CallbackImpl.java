@@ -2,6 +2,7 @@ package client;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -14,10 +15,13 @@ import java.rmi.server.UnicastRemoteObject;
  */
 public class CallbackImpl extends UnicastRemoteObject 
 		  implements IClientCallback {
-	private static String userName;
+	
+	private  String userName;
+	private  int delay;
 
-	public CallbackImpl(String userName) throws  RemoteException {
+	public CallbackImpl(String userName, int delay) throws  RemoteException {
 		this.userName = userName;
+		this.delay = delay;
 	}
 	
 	@Override
@@ -27,6 +31,11 @@ public class CallbackImpl extends UnicastRemoteObject
 
 	@Override
 	public void displayMessage(String message) throws RemoteException {
+		try { //lab2 6/3/2017
+			TimeUnit.SECONDS.sleep(delay);
+		} catch (InterruptedException ex) { } //interrupt ignored
+		//This will cause the displayMessage method to pause 
+		//before it prints the message.
 		System.out.println(message);
 	}
 	

@@ -13,6 +13,7 @@ import server.IChatServer;
  */
 public class Client {
 
+	
 	public static void main(String[] args) throws RemoteException, 
 			  NotBoundException {
 		
@@ -24,7 +25,7 @@ public class Client {
 		
 		// Creates an instance of the callback class passing in the user 
 		// name to the constructor
-		CallbackImpl cb = new CallbackImpl(name);
+		CallbackImpl cb = new CallbackImpl(name, 0);
 
 		/**
 		 * gets a reference to the RMI registry that contains the server object's

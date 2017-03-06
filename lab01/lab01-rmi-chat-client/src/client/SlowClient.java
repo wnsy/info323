@@ -24,7 +24,7 @@ public class SlowClient {
 		
 		// Creates an instance of the callback class passing in the user 
 		// name to the constructor
-		CallbackImpl cb = new CallbackImpl(name);
+		CallbackImpl cb = new CallbackImpl(name, 5);
 
 		/**
 		 * gets a reference to the RMI registry that contains the server object's
