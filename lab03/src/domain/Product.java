@@ -1,5 +1,8 @@
 package domain;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "product")
 public class Product {
 
 	private String id;

@@ -11,12 +11,27 @@ import javax.ws.rs.*;
  */
 @Path("/products/")
 public class InventoryResource {
-	private static final ProductDAO test = new ProductDAO();
+	private final ProductDAO test = new ProductDAO();
 
-   @GET   //method will be invoke when an HTTP GET request is sent to this
-	//resource class: when GET requesti is sent to /products/ path the service
-	//will return all of the products
-	private static Collection<Product> getProducts() {
+   /** method will be invoke when an HTTP GET request is sent to this
+	 * resource class: when GET request is sent to /products/ path the service
+	 * will return all of the products
+	 */
+	@GET
+	public Collection<Product> getProducts() {
 		return test.getAll();
+	}
+	
+	/**
+	 * Creates product
+	 * @POST method will respond to HTTP POST 
+	 * @param product 
+	 * //ignore this one// ==Response==
+		RESPONSE STATUS: 204 No Content
+		RESPONSE HEADERS: []
+	 */
+	@POST
+	public void createProduct(Product product) {
+		test.create(product);
 	}
 }
