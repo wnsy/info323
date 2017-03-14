@@ -2,6 +2,8 @@ package resources;
 
 import dao.ProductDAO;
 import domain.Product;
+import domain.ProductSummaries;
+import domain.ProductSummary;
 import java.util.Collection;
 import javax.ws.rs.*;
 
@@ -16,10 +18,11 @@ public class InventoryResource {
    /** method will be invoke when an HTTP GET request is sent to this
 	 * resource class: when GET request is sent to /products/ path the service
 	 * will return all of the products
+	 * @return 
 	 */
 	@GET
-	public Collection<Product> getProducts() {
-		return test.getAll();
+	public ProductSummaries getProducts() {
+		return test.getSummaries();
 	}
 	
 	/**
