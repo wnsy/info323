@@ -9,6 +9,7 @@ import org.glassfish.jersey.jdkhttp.JdkHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import resources.InventoryResource;
+import resources.ProductResource;
 
 /**
  *
@@ -33,8 +34,10 @@ public class Server {
 		//an exception listener that ensures that all exceptions get logged
 		config.register(ExceptionLogger.class);
 		
-		//adds our resource classes
+		//adds our resource and product classes
 		config.register(InventoryResource.class);
+		config.register(ProductResource.class);
+
 		
 		//defines the URI that the server will use
 		URI baseUri = new URI("http://localhost:8081/");
