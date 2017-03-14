@@ -6,6 +6,7 @@ import filters.ExceptionMessageHandler;
 import java.net.URI;
 import java.net.URISyntaxException;
 import org.glassfish.jersey.jdkhttp.JdkHttpServerFactory;
+import org.glassfish.jersey.linking.DeclarativeLinkingFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import resources.InventoryResource;
@@ -37,6 +38,7 @@ public class Server {
 		//adds our resource and product classes
 		config.register(InventoryResource.class);
 		config.register(ProductResource.class);
+		config.register(DeclarativeLinkingFeature.class);
 
 		
 		//defines the URI that the server will use
