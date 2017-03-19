@@ -3,9 +3,11 @@ package resources;
 import dao.ProductDAO;
 import domain.Product;
 import domain.ProductSummaries;
-import domain.ProductSummary;
-import java.util.Collection;
+import java.net.URI;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 /**
  *
@@ -27,6 +29,8 @@ public class InventoryResource {
 	
 	/**
 	 * Creates product
+	 * @param uri
+	 * @return 
 	 * @POST method will respond to HTTP POST 
 	 * @param product 
 	 * //ignore this one// ==Response==
@@ -34,7 +38,12 @@ public class InventoryResource {
 		RESPONSE HEADERS: []
 	 */
 	@POST
-	public void createProduct(Product product) {
+	public Response createProduct(Product product, @Context UriInfo uri) {
+		URI newURI = uri.getAbsolutePathBuilder()
+				  .path(product.getId().toString())
+				  .build();
 		test.create(product);
+		
+		return Response.created(newURI).build();
 	}
 }
