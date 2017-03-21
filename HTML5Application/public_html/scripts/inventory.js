@@ -24,8 +24,10 @@ module.controller('InventoryController', function ($scope, $resource) {
 			//gets the URI of the selected summary
 			var uri = $scope.selected.uri;
 		
-		  //uses URI to GET the product and put it in the model
-		  $scope.product = $resource(uri).get();
+		  //use URI to GET the product stub from the service & put it in the model
+		  //This adds the $update method to the stub and tells it to use the
+		  //PUT method when it sends the request
+		  $scope.product = $resource(uri, null, {update: {method: 'PUT'}}).get();
 		} else {
 			//if not, clear the existing product
 			$scope.product = null;
@@ -73,7 +75,7 @@ module.controller('InventoryController', function ($scope, $resource) {
 					  $scope.messages = "Product '" + $scope.product.name
 					  + "' was successfully deleted.";
 			        
-					  //clear the models since we just deleted the produc from
+					  //clear the models since we just deleted the product from
 					  //the service
 					  $scope.product = null;
 					  $scope.selected = null;
@@ -82,7 +84,32 @@ module.controller('InventoryController', function ($scope, $resource) {
    };
   
    $scope.updateSelectedProduct = function() {
-       
+		//do nothing if there is no valid product selected
+		if($scope.product === null) return;
+		
+		$scope.product.$update(
+				  //response callback
+				  function() {
+					  //update the summaries
+					  $scope.summaries.$get();
+					  
+					  //notify the user
+					  $scope.messages = "Product '" + $scope.product.name 
+					  + "' was successfully updated.";
+				  },
+				  
+				  //error callback
+				  function(response) {
+					  var message = response.data; //msg will contain the error msg
+					  
+					  //error code goes here
+					  $scope.messages = message;
+					  
+					  //force a refresh since we probably have outdated data
+					  $scope.summaries.$get();
+				  }
+				  );
+	
    };
 
 });
