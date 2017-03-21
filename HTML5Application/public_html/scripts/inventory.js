@@ -34,11 +34,51 @@ module.controller('InventoryController', function ($scope, $resource) {
    };
 
    $scope.createProduct = function() {
-
+		//Code will marshal he details in the product model ino JSON and POST
+		//it to he service
+	//inventoryResource.save($scope.product);
+		
+		/**
+		 * We need to ensure that the POST has completed before we GET the new
+		 * summaries. This means that we need to perform the GET inside the 
+		 * response callback for the POST since this is the only place that 
+		 * we can be certain that the POST has completed.
+		 * This code also adds a message to the page using the 
+		 * $scope.messages template.
+		 */
+		inventoryResource.save($scope.product,
+		//response callback
+		function() {
+			//GET the latest summaries from service
+			$scope.summaries.$get();
+			
+			//notify the user
+			$scope.messages = "New product '" + $scope.product.name
+			+ "' was successfully created.";
+		}
+		);
    };
 
    $scope.deleteSelectedProduct = function() {
-
+		// do nothing if there is no valid product selected
+		if($scope.product === null) return;
+		
+		$scope.product.$remove(
+				  //response callback
+				  function() {
+					  //update the summaries
+					  $scope.summaries.$get();
+					  
+					  //notify the user
+					  $scope.messages = "Product '" + $scope.product.name
+					  + "' was successfully deleted.";
+			        
+					  //clear the models since we just deleted the produc from
+					  //the service
+					  $scope.product = null;
+					  $scope.selected = null;
+				  }
+				  );
    };
   
    $scope.updateSelectedProduct = function() {
