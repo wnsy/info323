@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html ng-app="InventoryApp"> 
+	<!-- link that tells AngularJS it should apply the InventoryApp module -->
+
+	<head>
+
+		<title>Inventory Management</title>
+
+		<link rel="stylesheet" href="css/style.css" type="text/css" />
+
+		<script src="scripts/angular.min.js"></script>
+		<script src="scripts/angular-resource.min.js"></script>
+
+		<script src="scripts/inventory.js">
+			/* The following are hints to NetBeans to tell it that the following variables are declared outside of this file. */
+			/* This is necessary to stop NetBeans from warning us that the variables are not declared. */
+
+			/* global InventoryController */
+			/* global selected */
+			/* global product */
+			/* global messages */
+		</script>
+
+	</head>
+
+	<body>
+
+		<div id="content" ng-controller="InventoryController">
+
+			<h1>Manage Inventory</h1>
+
+			<form action="#">
+
+				<fieldset>
+
+					<legend>Available Products</legend>
+
+					<select ng-model="selected" ng-options="s.id +', ' +s.name for s in summaries.product_summary" ng-click="displaySelectedProduct()" size="5" class="fullwidth">
+						<option value="">-- Select a product to view --</option>
+					</select>
+
+				</fieldset>
+
+				<fieldset>
+
+					<legend>Edit Product</legend>
+
+					<div class="flexiform">
+
+						<div class="formlabels">
+							<label>ID:</label>
+							<label>Name:</label>
+							<label class="textarea">Description:</label>
+							<label>Price:</label>
+							<label>Stock on hand:</label>
+						</div>
+
+						<div class="formfields">
+							<input type="text" value="ID" ng-model="product.id"/>
+							<input type="text" value="Name" ng-model="product.name"/>
+							<textarea ng-model="product.description">Description</textarea>
+							<input type="text" value="Price" ng-model="product.price"/>
+							<input type="text" value="Stock" ng-model="product.stockOnHand"/>
+						</div>
+
+					</div>
+
+					<div class="buttongroup">
+						<button type="button" ng-click="createProduct()">Create</button>
+						<button type="button" ng-click="updateSelectedProduct()">Update</button>
+						<button type="button" ng-click="deleteSelectedProduct()">Delete</button>
+					</div>
+
+				</fieldset>
+
+			</form>
+
+			<p>{{messages}}</p>
+
+		</div>
+	</body>
+</html>
