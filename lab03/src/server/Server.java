@@ -1,5 +1,6 @@
 package server;
 
+import filters.CorsFilter;
 import filters.DebugFilter;
 import filters.ExceptionLogger;
 import filters.ExceptionMessageHandler;
@@ -34,6 +35,9 @@ public class Server {
 		
 		//an exception listener that ensures that all exceptions get logged
 		config.register(ExceptionLogger.class);
+		
+		//adds CORS filter to allow AJAX clients to access the service
+		config.register(CorsFilter.class);
 		
 		//adds our resource and product classes
 		config.register(InventoryResource.class);
