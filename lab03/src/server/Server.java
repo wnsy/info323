@@ -12,6 +12,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import resources.InventoryResource;
 import resources.ProductResource;
+import resources.WebhookResource;
 
 /**
  *
@@ -43,6 +44,7 @@ public class Server {
 		config.register(InventoryResource.class);
 		config.register(ProductResource.class);
 		config.register(DeclarativeLinkingFeature.class);
+		config.register(WebhookResource.class);
 
 		
 		//defines the URI that the server will use
