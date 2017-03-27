@@ -14,6 +14,7 @@ public class WebhookResource {
 	private static final ArrayList<WebhookRegistration> urlList = new ArrayList<>(); 
 	
 	//create a webhook instance for that URI and add it to the collection
+	//needs to be marshalled
 	@POST @Consumes("text/plain")
 	public void registerWebhook(String url) {
 		WebhookRegistration webhook = new WebhookRegistration(url);
@@ -29,11 +30,10 @@ public class WebhookResource {
 	 * To allow client to send a properly encoded webhook using XML/JSON
 	 *
 	 * @param webhook
-	 * @return 
 	 */
   @POST
-	public String getResource(WebhookRegistration webhook) {
-		return webhook.getURL();
+	public void registerXmlJson(WebhookRegistration webhook) {
+		urlList.add(webhook);
 	}
 	
 }

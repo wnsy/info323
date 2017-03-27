@@ -3,9 +3,16 @@ package dao;
 import domain.Product;
 import domain.ProductSummaries;
 import domain.ProductSummary;
+import domain.WebhookRegistration;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import org.glassfish.jersey.client.ClientConfig;
+import resources.WebhookResource;
 
 public class ProductDAO {
 
@@ -46,6 +53,22 @@ public class ProductDAO {
 
 	public void create(Product product) {
 		products.put(product.getId(), product);
+		
+		//lab5 Firing the webhook
+		WebhookResource webhook = new WebhookResource();
+		
+		ArrayList<WebhookRegistration> storeWebhook = webhook.getResource();
+		
+				//creates client config
+		ClientConfig config = new ClientConfig();
+
+		//creates client endpoint
+		Client client = ClientBuilder.newClient(config);
+
+		
+		for (WebhookRegistration test : storeWebhook) {
+			client.target(test.getURL()).request().async().post(Entity.entity(product, "application/json"));
+		}
 	}
 
 	public void delete(Product product) {
